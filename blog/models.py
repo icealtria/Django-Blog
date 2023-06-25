@@ -29,8 +29,9 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return self.title
