@@ -3,12 +3,20 @@ from typing import Any
 from django.contrib import admin
 from django.http.request import HttpRequest
 from django.urls import reverse
+from blog_sys.base_admin import BaseOwnerAdmin
+
+from blog_sys.custom_site import custom_site
 
 from .models import Post, Category, Tag
 # Register your models here.
 
 
-@admin.register(Category)
+class PostInline(admin.TabularInline):
+    fields = ['title']
+    extra = 1
+    model = Post
+
+@admin.register(Category, site=custom_site)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name", "owner", "post_count"]
     fields = ["name", "owner"]
@@ -22,7 +30,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
     post_count.short_description = "文章数量"
 
-@admin.register(Tag)
+@admin.register(Tag, site=custom_site)
 class TagAdmin(admin.ModelAdmin):
     list_display = ["name"]
     fields = ["name"]
@@ -44,7 +52,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
             return queryset.filter(owner=request.user)
         return queryset
 
-@admin.register(Post)
+@admin.register(Post, site=custom_site)
 class PostAdmin(admin.ModelAdmin):
     list_display = ["title", "category", "operator"]
     list_display_links = ["title"]
@@ -59,16 +67,10 @@ class PostAdmin(admin.ModelAdmin):
     def operator(self, obj):
         return format_html(
             '<a href="{}">编辑</a>',
-            reverse("admin:blog_post_change", args=(obj.id,)),
+            reverse("cus_admin:blog_post_change", args=(obj.id,)),
         )
     operator.short_description = "操作"
     
     def save_model(self, request: HttpRequest, obj: Any, form: Any, change: Any) -> None:
         obj.owner = request.user
         return super().save_model(request, obj, form, change)
-    
-    class Media:
-        css = {
-            'all': ("https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css",)
-        }
-        js = ("https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.bundle.js",)
