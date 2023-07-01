@@ -1,0 +1,31 @@
+<h1>Post List</h1>
+
+
+{% if tag %}
+标签页: {{tag.name}}
+{% endif %}
+
+
+{% if category %}
+分类页：{{category.name}}
+{% endif %}
+
+
+{% if post_list %}
+<ul>
+    {% for post in post_list %}
+      <li>
+        <a href="{% url 'post_detail' post_id=post.id %}">
+            {{ post.title }}
+        </a>
+        <div>
+          <span>作者：{{ post.owner.name }}</span>
+          <span>分类：{{ post.category.name }}</span>
+        </div>
+        <p>{{ post.desc }}</p>
+      </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <h2>Empty</h1>
+{% endif %}

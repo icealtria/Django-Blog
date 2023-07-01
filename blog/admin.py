@@ -8,6 +8,8 @@ from blog_sys.base_admin import BaseOwnerAdmin
 from blog_sys.custom_site import custom_site
 
 from .models import Post, Category, Tag
+
+from django.contrib.admin.models import LogEntry
 # Register your models here.
 
 
@@ -62,7 +64,7 @@ class PostAdmin(admin.ModelAdmin):
     
     actions_on_top = True
         
-    fields = ["title", "category", "tags", "body"]
+    fields = ["title", "category", "tags","desc", "body", "status"]
     
     def operator(self, obj):
         return format_html(
@@ -74,3 +76,7 @@ class PostAdmin(admin.ModelAdmin):
     def save_model(self, request: HttpRequest, obj: Any, form: Any, change: Any) -> None:
         obj.owner = request.user
         return super().save_model(request, obj, form, change)
+    
+@admin.register(LogEntry, site=custom_site)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ["object_repr", "object_id", "action_flag", "user", "change_message"]
