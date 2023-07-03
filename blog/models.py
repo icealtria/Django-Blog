@@ -27,13 +27,16 @@ class Post(models.Model):
         (0, "Draft"),
         (1, "Published"),
     )
-    status = models.CharField(max_length=10, choices=Status)
+    status = models.SmallIntegerField(choices=Status, default=0)
     title = models.CharField(max_length=100)
     desc = models.TextField(blank=True)
     body = models.TextField(blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    pv = models.PositiveIntegerField(default=1)
+    uv = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.title
@@ -61,3 +64,7 @@ class Post(models.Model):
         else:
             post_list = category.post_set.all()
         return post_list, category
+    
+    @classmethod
+    def most_popular(cls):
+        return cls.objects.filter(status=cls.STATUS_PUBLISHED).order_by("-pv")

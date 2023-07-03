@@ -12,8 +12,10 @@ def post_list(request, category_id=None, tag_id=None):
     if tag_id:
         post_list, tag = Post.get_by_tag(tag_id)
 
-    else:
+    elif category_id:
         post_list, category = Post.get_by_category(category_id)
+    else:
+        post_list = Post.objects.filter(status=Post.STATUS_PUBLISHED)
 
     context = {"post_list": post_list, "tag": tag, "category": category}
 

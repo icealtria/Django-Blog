@@ -1,9 +1,19 @@
-{% if post %}
-<h1>{{ post.title }}</h1>
-<div>
-  <span>作者：{{ post.owner }}</span>
-  <br>
-  <span>分类：{{ post.category }}</span>
-</div>
-<p>{{ post.body }}</p>
-{% endif %}
+{% extends 'blog/base.html' %}
+
+
+{% block title %}
+  {{ post.title }}
+{% endblock title %}
+  
+
+{% block main %}
+  {% if post %}
+    <h1>{{ post.title }}</h1>
+    <div>
+      <span>作者：{{ post.owner }}</span>
+      <br />
+      <span>分类：{{ post.category }}</span>
+    </div>
+    <p>{{ post.body }}</p>
+  {% endif %}
+{% endblock %}
