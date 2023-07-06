@@ -28,9 +28,11 @@ class Post(models.Model):
         (1, "Published"),
     )
     status = models.SmallIntegerField(choices=Status, default=0)
+    
     title = models.CharField(max_length=100)
     desc = models.TextField(blank=True)
     body = models.TextField(blank=True)
+    
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)

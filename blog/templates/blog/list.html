@@ -1,21 +1,15 @@
 {% extends './base.html' %}
 
 {% block title %}
-  {% if tag %}
-    标签页: {{ tag.name }}
-  {% endif %}
-
-  {% if category %}
-    分类页：{{ category.name }}
-  {% endif %}
+  {% include 'blog/title.html' %}
 {% endblock %}
 
-
 {% block main %}
+<h1>{% include 'blog/title.html' %}</h1>
 <ul>
   {% for post in post_list %}
   <li>
-    <a href="{% url 'post_detail' post_id=post.id %}">
+    <a href="{% url 'post_detail' post.id %}">
       {{ post.title }}
     </a>
     <div>
@@ -25,6 +19,16 @@
     <p>{{ post.desc }}</p>
   </li>
 {% endfor %}
+
+{% if page_obj.has_previous %}
+  <li><a href="?page={{ page_obj.previous_page_number }}">上一页</a></li>
+{% endif %}
+Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+{% if page_obj.has_next %}
+  <li><a href="?page={{ page_obj.next_page_number }}">下一页</a></li>
+{% endif %}
+  
+
 </ul>
   
 {% endblock %}
