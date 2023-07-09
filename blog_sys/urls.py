@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', custom_site.urls),
     # path('', post_list),
     path('', HomeView.as_view()),
-    path('category/<int:category_id>/', CategoryView.as_view()),
+    path('category/<int:category_id>/', CategoryView.as_view(), name = "category_list"),
     path('tag/<int:tag_id>/', TagView.as_view()),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     # path('category/<int:category_id>/', post_list),

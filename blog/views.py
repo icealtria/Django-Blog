@@ -21,7 +21,7 @@ class CommonViewMixin:
 class IndexView(CommonViewMixin, ListView):
     queryset = Post.objects.filter(status=Post.STATUS_PUBLISHED)
     template_name = "blog/list.html"
-    paginate_by = 1
+    paginate_by = 7
     context_object_name = "post_list"
 
 class CategoryView(IndexView):

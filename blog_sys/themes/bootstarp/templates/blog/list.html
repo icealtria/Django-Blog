@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+
+{% block title %}
+  {% include 'blog/title.html' %}
+{% endblock %}
+
+{% block main %}
+{% comment %} <h1>{% include 'blog/title.html' %}</h1> {% endcomment %}
+<ul>
+  {% for post in post_list %}
+  <div class="card post">
+    <div class="card-body">
+      <h5 class="card-title"><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+      <span>作者：{{ post.owner.last_name }}</span>
+      <span>分类：<a href="{% url 'category_list' post.category.id %}"> {{ post.category.name }}</a></span>
+      <p class="card-text">{{ post.desc }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+{% if page_obj.has_previous %}
+  <li><a href="?page={{ page_obj.previous_page_number }}">上一页</a></li>
+{% endif %}
+Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+{% if page_obj.has_next %}
+  <li><a href="?page={{ page_obj.next_page_number }}">下一页</a></li>
+{% endif %}
+  
+
+</ul>
+  
+{% endblock %}
