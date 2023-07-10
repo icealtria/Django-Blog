@@ -11,7 +11,7 @@
     <h1 class="display-4">{{ post.title }}</h1>
     <div class="card-body">
       <span>作者：{{ post.owner }}</span>
-      <span>分类：{{ post.category }}</span>
+      <span>分类：<a href="{% url 'category_list' post.category.id %}">{{ post.category }}</a></span>
 
     </div>
     <p class="card-text">{{ post.body }}</p>

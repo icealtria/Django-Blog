@@ -8,9 +8,6 @@ from .models import Tag, Post, Category
 from config.models import SideBar, Nav, Link
 
 from django.views.generic import DetailView, ListView
-class PostDetailView(DetailView):
-    model = Post
-    template_name = "blog/detail.html"
 
 # Create your views here.
 class CommonViewMixin:
@@ -19,6 +16,10 @@ class CommonViewMixin:
         context["sidebars"] = SideBar.get_all()
         context['navs'] = Nav.get_all()
         return context
+    
+class PostDetailView(CommonViewMixin, DetailView):
+    model = Post
+    template_name = "blog/detail.html"
     
 class IndexView(CommonViewMixin, ListView):
     queryset = Post.objects.filter(status=Post.STATUS_PUBLISHED)
