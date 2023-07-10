@@ -11,6 +11,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = verbose_name_plural = "分类"
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=100)
@@ -18,6 +21,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = verbose_name_plural = "标签"
 
 
 class Post(models.Model):
@@ -28,15 +34,15 @@ class Post(models.Model):
         (1, "Published"),
     )
     status = models.SmallIntegerField(choices=Status, default=0)
-    
+
     title = models.CharField(max_length=100)
     desc = models.TextField(blank=True)
     body = models.TextField(blank=True)
-    
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     pv = models.PositiveIntegerField(default=1)
     uv = models.PositiveIntegerField(default=1)
 
@@ -66,7 +72,7 @@ class Post(models.Model):
         else:
             post_list = category.post_set.all()
         return post_list, category
-    
+
     @classmethod
     def most_popular(cls):
         return cls.objects.filter(status=cls.STATUS_PUBLISHED).order_by("-pv")
