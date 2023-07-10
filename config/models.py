@@ -83,3 +83,24 @@ class SideBar(models.Model):
             }
             result = render_to_string('config/blocks/sidebar_comments.html', context)
         return result
+    
+class Nav(models.Model):
+    STATUS_SHOW = 1
+    STATUS_HIDE = 0
+    
+    Status = (
+        (STATUS_SHOW, "展示"),
+        (STATUS_HIDE, "隐藏"),
+    )
+
+    title = models.CharField(max_length=50, verbose_name="标题")
+    link = models.URLField(verbose_name="链接")
+    status = models.IntegerField(choices=Status, default=1)
+    
+    class Meta:
+        verbose_name = "导航"
+        verbose_name_plural = verbose_name
+        
+    @classmethod
+    def get_all(cls):
+        return cls.objects.filter(status=cls.STATUS_SHOW)

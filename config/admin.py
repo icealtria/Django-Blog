@@ -1,7 +1,7 @@
 from typing import Any
 from django.contrib import admin
 from django.http.request import HttpRequest
-from .models import Link, SideBar
+from .models import Link, SideBar, Nav
 
 # Register your models here.
 
@@ -28,3 +28,8 @@ class SideBarAdmin(admin.ModelAdmin):
     ) -> None:
         obj.owner = request.user
         return super().save_model(request, obj, form, change)
+
+@admin.register(Nav)
+class NavAdmin(admin.ModelAdmin):
+    list_display = ["title", "link", "status"]
+    fields = ["title", "link", "status"]

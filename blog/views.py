@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from .models import Tag, Post, Category
-from config.models import SideBar
+from config.models import SideBar, Nav, Link
 
 from django.views.generic import DetailView, ListView
 class PostDetailView(DetailView):
@@ -16,6 +16,7 @@ class CommonViewMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["sidebars"] = SideBar.get_all()
+        context['navs'] = Nav.get_all()
         return context
     
 class IndexView(CommonViewMixin, ListView):
