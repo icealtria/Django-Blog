@@ -2,6 +2,7 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 
 from .models import Tag, Post, Category
 from config.models import SideBar, Nav, Link
@@ -45,6 +46,22 @@ class HomeView(IndexView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+class SearchView(IndexView):
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(status=Post.STATUS_PUBLISHED).filter(
+                Q(title__icontains=query) | Q(body__icontains=query)
+            )
+        else:
+            return super().get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_keyword'] = self.request.GET.get('q', '')
+        return context
+    
 
 # def post_list(request, category_id=None, tag_id=None):
 #     tag = None
