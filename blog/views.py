@@ -63,7 +63,12 @@ class SearchView(IndexView):
         context['search_keyword'] = self.request.GET.get('q', '')
         return context
     
-
+class AuthorView(IndexView):
+    def get_queryset(self):
+        query = super().get_queryset()
+        author_id = self.kwargs.get('owner_id')
+        return query.filter(owner__id=author_id)
+        
 # def post_list(request, category_id=None, tag_id=None):
 #     tag = None
 #     category = None
