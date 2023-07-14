@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from .custom_site import custom_site
 
-from blog.views import links
+from config.views import LinkListView
 from blog.views import PostDetailView, CategoryView, TagView, HomeView, SearchView, AuthorView
 # from blog.views import post_list, post_detail
 urlpatterns = [
@@ -34,5 +34,5 @@ urlpatterns = [
     # path('category/<int:category_id>/', post_list),
     # path('tag/<int:tag_id>/', post_list),
     # path('post/<int:post_id>/', post_detail, name='post_detail'),
-    path('links/', links),
+    path('links/', LinkListView.as_view(), name='links'),
 ]

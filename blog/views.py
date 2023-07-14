@@ -1,7 +1,6 @@
 from typing import Any
-from django.db.models.query import QuerySet
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from .models import Tag, Post, Category

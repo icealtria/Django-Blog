@@ -6,6 +6,9 @@ from django.template.loader import render_to_string
 
 
 class Link(models.Model):
+    STATUS_NORMAL = 1
+    STATUS_DELETE = 0
+    
     Status = (
         (1, "正常"),
         (0, "删除"),
