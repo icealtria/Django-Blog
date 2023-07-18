@@ -4,7 +4,7 @@ from .models import Comment
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ["name", "post", "email", "body", "created", "active"]
+    list_display = ["name", "target", "email", "body", "created", "active"]
     list_filter = ["active", "created"]
     search_fields = ["name", "email", "body"]
     actions_on_top = True

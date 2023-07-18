@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>评论结果</title>
+        <style>
+            body {
+                text-align: center;
+            }
+
+            .result {
+                text-align: center;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                width: 40%;
+            }
+
+            .errorlist {
+                color: red;
+            }
+
+            ul li {
+                list-style: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="result">
+            {% if succeed %}
+                <p>评论成功</p>
+                <a href="{{ target }}">返回</a>
+            {% else %}
+                <ul class="errorlist">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+                <a href="javascript:window.history.back();">返回</a>
+            {% endif %}
+    </body>
+</html>
