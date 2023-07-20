@@ -9,22 +9,21 @@ from .forms import CommentForm
 class CommentView(TemplateView):
     template_name = "comment/index.html"
     http_method_names = ['post']
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         comment_form = CommentForm(request.POST)
-        taget = request.POST.get("target")
-        
+        target = request.POST.get("target")
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
-            comment.target = taget
+            comment.target = target
             comment.save()
             succeed = True
-            return redirect(taget)
+            return redirect(target)
         else:
             succeed = False
             
         context = {
             'form': comment_form,
-            'target': taget,
+            'target': target,
             'succeed': succeed
         }
         print(context['form'])

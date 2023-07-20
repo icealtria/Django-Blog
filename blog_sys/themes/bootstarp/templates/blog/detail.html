@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load comment_block %}
 
 
 {% block title %}
@@ -17,26 +18,6 @@
     <p class="card-text">{{ post.body }}</p>
   {% endif %}
 
-  {% block comment %}
-<div class="comment">
-  <form class="form-group" action="/comment/" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="target" value="{{ request.path }}"/>
-    {{ comment_form }}
-    <br>
-    <button class="btn btn-primary" type="submit">发表评论</button>
-  </form>
-  <ul class="list-group">
-    {% for comment in comment_list %}
-      <li class="list-group-item">
-        <div class="nickname">
-          <a href="{{ comment.website }}">{{ comment.name }}</a>
-          <span>{{ comment.created }}</span>
-        </div>
-        <div class="comment-content">{{ comment.body|safe }}</div>
-      </li>
-    {% endfor %}
-  </ul>
-</div>
-{% endblock comment %}
+{% comment_block request.path %} 
+
 {% endblock %}
