@@ -38,6 +38,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     desc = models.TextField(blank=True)
     body = models.TextField(blank=True)
+    body_html = models.TextField(blank=True,verbose_name="正文html", editable=False)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
