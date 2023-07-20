@@ -13,7 +13,11 @@
           <a href="{{ comment.website }}">{{ comment.name }}</a>
           <span>{{ comment.created }}</span>
         </div>
-        <div class="comment-content">{{ comment.body|safe }}</div>
+        <div class="comment-content">       
+          {% autoescape off %}
+          {{ comment.body }}
+          {% endautoescape %}
+        </div>
       </li>
     {% endfor %}
   </ul>
