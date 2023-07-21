@@ -21,6 +21,8 @@ from .custom_site import custom_site
 from config.views import LinkListView
 from blog.views import PostDetailView, CategoryView, TagView, HomeView, SearchView, AuthorView
 from comment.views import CommentView
+from blog.rss import LatestPostsFeed
+
 # from blog.views import post_list, post_detail
 urlpatterns = [
     path('superadmin/', admin.site.urls),
@@ -37,4 +39,5 @@ urlpatterns = [
     # path('post/<int:post_id>/', post_detail, name='post_detail'),
     path('links/', LinkListView.as_view(), name='links'),
     path('comment/', CommentView.as_view(), name='comment'),
+    path("feed/", LatestPostsFeed(), name="rss"),
 ]
