@@ -23,6 +23,15 @@ from blog.views import PostDetailView, CategoryView, TagView, HomeView, SearchVi
 from comment.views import CommentView
 from blog.rss import LatestPostsFeed
 
+from rest_framework.routers import SimpleRouter
+from blog.apis import CategoryViewSet, PostViewSet
+router = SimpleRouter()
+router.register(r'posts', PostViewSet, basename="api-post")
+router.register(r'categories', CategoryViewSet, basename="api-category")
+# router.register(r'posts/(?P<pk>\d+)', post_detail)
+
+from rest_framework.documentation import include_docs_urls
+
 # from blog.views import post_list, post_detail
 urlpatterns = [
     path('superadmin/', admin.site.urls),
@@ -40,4 +49,9 @@ urlpatterns = [
     path('links/', LinkListView.as_view(), name='links'),
     path('comment/', CommentView.as_view(), name='comment'),
     path("feed/", LatestPostsFeed(), name="rss"),
+    # path("api/post/", PostList.as_view(), name="api-post"),
+    # path('api/post/', post_list, name="api-post"),
+    # path("api/post/<int:pk>/", PostList.as_view(), name="api-post-detail"),
+    path("api/", include(router.urls)),
+    path("api/doc/", include_docs_urls(title="Blog API")),
 ]
