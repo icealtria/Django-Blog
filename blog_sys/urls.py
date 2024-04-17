@@ -28,30 +28,21 @@ from blog.apis import CategoryViewSet, PostViewSet
 router = SimpleRouter()
 router.register(r'posts', PostViewSet, basename="api-post")
 router.register(r'categories', CategoryViewSet, basename="api-category")
-# router.register(r'posts/(?P<pk>\d+)', post_detail)
 
 from rest_framework.documentation import include_docs_urls
 
-# from blog.views import post_list, post_detail
 urlpatterns = [
     path('superadmin/', admin.site.urls),
     path('admin/', custom_site.urls),
-    # path('', post_list),
     path('', HomeView.as_view()),
     path('category/<int:category_id>/', CategoryView.as_view(), name = "category_list"),
     path('tag/<int:tag_id>/', TagView.as_view()),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('search/', SearchView.as_view(), name='search'),
     path('author/<int:owner_id>/', AuthorView.as_view(), name='author'),
-    # path('category/<int:category_id>/', post_list),
-    # path('tag/<int:tag_id>/', post_list),
-    # path('post/<int:post_id>/', post_detail, name='post_detail'),
     path('links/', LinkListView.as_view(), name='links'),
     path('comment/', CommentView.as_view(), name='comment'),
     path("feed/", LatestPostsFeed(), name="rss"),
-    # path("api/post/", PostList.as_view(), name="api-post"),
-    # path('api/post/', post_list, name="api-post"),
-    # path("api/post/<int:pk>/", PostList.as_view(), name="api-post-detail"),
     path("api/", include(router.urls)),
     path("api/doc/", include_docs_urls(title="Blog API")),
 ]

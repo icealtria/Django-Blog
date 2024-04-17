@@ -33,7 +33,8 @@ class Post(models.Model):
         (0, "Draft"),
         (1, "Published"),
     )
-    status = models.SmallIntegerField(choices=Status, default=0)
+    
+    post_status = models.SmallIntegerField(choices=Status, default=0)
 
     title = models.CharField(max_length=100)
     desc = models.TextField(blank=True)

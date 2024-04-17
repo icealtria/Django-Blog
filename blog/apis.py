@@ -5,25 +5,6 @@ from rest_framework.response import Response
 from .models import Post, Category, Tag
 from .serializers import PostSerializer, CategorySerializer, TagSerializer, PostDetailSerializer
 
-# @api_view(['GET'])
-# def post_list(request):
-#     posts = Post.objects.all()
-#     serializer = PostSerializer(posts, many=True)
-#     return Response(serializer.data)
-
-# class PostList(generics.ListAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-    
-# @api_view(['GET'])
-# def post_detail(request, pk):
-#     post = Post.objects.get(pk=pk)
-#     serializer = PostSerializer(post)
-#     return Response(serializer.data)
-
-# class PostDetail(generics.RetrieveAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
     
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.filter(status=Post.STATUS_PUBLISHED)
